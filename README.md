@@ -56,7 +56,9 @@ I am going to use the required technologies in the following ways.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
+- [x] **Server deployed and accessible with custom domain name** - (https://alvaradogames.click).
+
+I deployed my application through AWS using an EC2 instance. I set up a custom domain name, listed above as alvaradogames.click, to access my application. I configured HTTP and HTTPS access to have secure connections as well. 
 
 ## 🚀 HTML deliverable
 
