@@ -68,15 +68,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 ./deployFiles.sh -k ~/keys/production.pem -h yourdomain.click -s startup 
 -->
 
-- [x] **HTML pages** - I did not complete this part of the deliverable.
-- [x] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [x] **Links** - I did not complete this part of the deliverable.
-- [x] **Text** - I did not complete this part of the deliverable.
-- [x] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [x] **Images** - I did not complete this part of the deliverable.
-- [x] **Login placeholder** - I did not complete this part of the deliverable.
-- [x] **DB data placeholder** - I did not complete this part of the deliverable.
-- [x] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - I added the all the html pages for the application, with descriptions of what will go there once I add the CSS, JavaScript and React functionality.
+- [x] **Proper HTML element usage** - I added the proper HTML elements to the different pages of my application.
+- [x] **Links** - I have links to navigate between the different pages of my application.
+- [x] **Text** - I added text to describe the different parts of my application, and to give context to the user
+- [x] **3rd party API placeholder** - I added the table which will eventually show data from a 3rd party API, which is the cards deck API.
+- [x] **Images** - I added the image of the design sketch to the README.md file, as well as the table image which I created on draw.io to represent where the cards will go.
+- [x] **Login placeholder** - I added the login placeholder on the login page.
+- [x] **DB data placeholder** - I added the database table to the highscores page which will eventually show data from the database.
+- [x] **WebSocket placeholder** - The chatbox and the table with the changing cards on the game page is the placeholder for the WebSocket functionality.
 
 I added all of these html elemnts to my project. I created the different html pages with descriptions of what will go there once I add the CSS, JavaScript and React functionality. There are images included as well as links to navigate between the pages.
 
