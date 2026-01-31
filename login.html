@@ -1,32 +1,36 @@
 <!-- This will be the login page for the black jack game so you can acces your user account -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-    <body>
-        <main>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Page</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body class="page">
+        <header class="background-image1">
             <h1>Welcome to the Login Page!</h1>
+        </header>
+        <main class="background-image1">
             <nav>
-                <ul>
-                    <li><a href="index.html">Home Page</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="table.html">Play Game</a></li>
-                    <li><a href="scores.html">High Scores</a></li>
-                    <li><a href="rules.html">Game Rules</a></li>
+                <ul class="nav-bar">
+                    <a href="index.html">Home Page</a>
+                    <a href="login.html">Login</a>
+                    <a href="table.html">Play Game</a>
+                    <a href="scores.html">High Scores</a>
+                    <a href="rules.html">Game Rules</a>
                 </ul>
-            </nav>    
-        </main>
-        Login Form:
-        <form action="/submit_login" method="post">
-            <label for="username">Username:</label>
+            </nav>
+            Login Form:
+        <form class="login-form" action="/submit_login" method="post">
+            <label class="login-form-label" for="username">Username:</label>
             <input type="text" id="username" name="username" required><br><br>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required><br><br>
             <input type="submit" value="Login">
+        </form>    
+        </main>
     </body> 
     <footer>
         <p>&copy; Alvarado Games 2026. All rights reserved.</p>
