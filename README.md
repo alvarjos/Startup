@@ -84,12 +84,12 @@ I added all of these html elemnts to my project. I created the different html pa
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Visually appealing colors and layout. No overflowing elements.** - I did not complete this part of the deliverable.
-- [ ] **Use of a CSS framework** - I did not complete this part of the deliverable.
-- [ ] **All visual elements styled using CSS** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing using flexbox and/or grid display** - I did not complete this part of the deliverable.
-- [ ] **Use of a imported font** - I did not complete this part of the deliverable.
-- [ ] **Use of different types of selectors including element, class, ID, and pseudo selectors** - I did not complete this part of the deliverable.
+- [x] **Visually appealing colors and layout. No overflowing elements.** - I added colors, styles and a background image to cover most of the pages that has a black jack theme design. I made sure that no elements overflow the page when resizing the window. I do need to update the nav bar so when it gets too small it puts a menu button but I didn't have time for that yet.
+- [x] **Use of a CSS framework** - I used css frameworks for the login button, form labels and input boxes.
+- [x] **All visual elements styled using CSS** - I used css to style most of the visual elements but I still need to work on a few more pages.
+- [x] **Responsive to window resizing using flexbox and/or grid display** - I made the pages so they are responsive to different window sizes.
+- [ ] **Use of a imported font** - I used a different font times new roman but I didnt have time to import a custom font.
+- [x] **Use of different types of selectors including element, class, ID, and pseudo selectors** - I used different types of selectors such as classes, ids, and elements to style the pages.
 
 ## 🚀 React part 1: Routing deliverable
 
