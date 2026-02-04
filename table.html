@@ -7,31 +7,68 @@
     <title>Table</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-    <body>
-        <main>
-            <h1>Welcome to the Table/Game Page!</h1>
+    <body class="page">
+        <header class="background-image1">
+            <h1>Black Jack Game Table</h1>
+        </header>
+        <main class="background-image1">
             <nav>
-                <ul>
-                    <li><a href="index.html">Home Page</a></li>                    
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="table.html">Play Game</a></li>
-                    <li><a href="scores.html">High Scores</a></li>
-                    <li><a href="rules.html">Game Rules</a></li>
+                <ul class="nav-bar">
+                    <a href="index.html">Home Page</a>                    
+                    <a href="login.html">Login</a>
+                    <a href="table.html">Play Game</a>
+                    <a href="scores.html">High Scores</a>
+                    <a href="rules.html">Game Rules</a>
                 </ul>
             </nav>
-            Game Table Area:
+            Game Table Area
+            <br><br>
             <section>
                 <!-- Game interface elements would go here -->
                  <img src="/images/Table Design.drawio.png" alt="Game Table" />
             </section>
-            Console Log:
+            <!-- Console Log
             <section id="consoleLog">
-                <!-- Game messages and updates would be displayed here -->
-                Chat Log:
+                Game messages and updates would be displayed here -->
+        
+        
+        <!-- Chat messages will appear here -->
             <section id="chatLog">
-                <div id="chatBox" style="border:1px solid #000; height:100px; width:400px; overflow-y:scroll;">
-                    <!-- Chat messages will appear here -->
-                </div>
+                <div class="chat-header">Chat Log</div>
+
+                <div class="chat-messages">
+                    <div class="chat-row">
+                        <div class="chat-user">User 001</div>
+                        <div class="chat-messages">Message will go right here</div>
+                    </div>
+
+                    <div class="chat-row">
+                        <div class="chat-user">User 002</div>
+                        <div class="chat-messages">Another message will go right here</div>
+                    </div>
+
+                    <div class="chat-row">
+                        <div class="chat-user">User 003</div>
+                        <div class="chat-messages">Another message will go right here</div>
+                    </div>
+
+                    <div class="chat-row">
+                        <div class="chat-user">User 004</div>
+                        <div class="chat-messages">Another message will go right here</div>
+                    </div>
+
+                    <div class="chat-row">
+                        <div class="chat-user">User 005</div>
+                        <div class="chat-messages">Another message will go right here</div>
+                    </div>
+
+                    <div class="chat-row">
+                        <div class="chat-user">User 006</div>
+                        <div class="chat-messages">Another message will go right here</div>
+                    </div>
+
+                    
+                </div>    
             </section>
         </main>
     </body>
