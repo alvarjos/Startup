@@ -70,7 +70,7 @@ I also used SVG to make the icon and logo for the app. This turned out to be a p
 
 ## React Part 1: Routing
 
-Setting up Vite and React was pretty simple. I had a bit of trouble because of conflicting CSS. This isn't as straight forward as you would find with Svelte or Vue, but I made it work in the end. If there was a ton of CSS it would be a real problem. It sure was nice to have the code structured in a more usable way.
+I learned about React Router and how to use it to create multiple views of jsx files in a single page. It was honestly a little hard to get started at first because the scripts weren't working right but I was able to troubleshoot and get it working. I learned about running to dev using the script and testing out the server there and it was a lot easier to get it working. I also learned how to integrate jsx files into the html and use those to format my pages going forward. 
 
 ## React Part 2: Reactivity
 
