@@ -1,9 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './app.css';
+import App from './app.css';
 
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
-import { Home } from './home/index';
+import { Home } from './home/home';
 import { Login } from './login/login';
 import { Scores } from './scores/scores';
 import { Table } from './table/table';
@@ -13,7 +13,6 @@ import { Rules } from './rules/rules';
 export default function App() {
   return (
     <BrowserRouter>
-        Simon<sup>&reg;</sup>
         <li className="nav-item">
           <NavLink className="nav-link" to="">
             Home
