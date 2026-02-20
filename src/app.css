@@ -1,12 +1,18 @@
 /* This is the main CSS file for the Startup project */
 
+body {
+  margin: 0;
+  padding: 0;
+  Nav-Link {
+    color: white;
+  }
+}
+
 .page {
   height: 100%;
   margin: 0;
   padding: 0;
   font-family: Times New Roman, sans-serif;
-  margin: 0;
-  padding: 0;
   background-color: #ffffff;
   display: flex;
   min-height: 100vh;
@@ -25,6 +31,12 @@
     justify-items: auto;
     padding-left: 5%;
     padding-right: 5%;
+    a:link {
+        color: white;
+    }
+    a:visited {
+        color: white;
+    }
 }
 
 .login-form {
@@ -177,7 +189,6 @@ footer {
 
 #scoresTable td {
     border: 1px solid #000;
-    /* padding: 8px; */
     text-align: center;
     background-color: #fff;
     color: #000;
