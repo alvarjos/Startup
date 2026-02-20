@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom';
 export function Home() {
   return ( 
     <main className="background-image1">
-        <nav>
-            <ul><NavLink to="/home">Home</NavLink></ul>
+        <nav className="main-nav">
+            <ul><NavLink to="/">Home</NavLink></ul>
             <ul><NavLink to="/login">Login</NavLink></ul>
             <ul><NavLink to="/table">Play Game</NavLink></ul>
             <ul><NavLink to="/scores">High Scores</NavLink></ul>
