@@ -2,19 +2,22 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 export function Home() {
-  return (
+  return ( 
     <main className="background-image1">
         <nav>
+            <ul><NavLink to="/home">Home</NavLink></ul>
+            <ul><NavLink to="/login">Login</NavLink></ul>
+            <ul><NavLink to="/table">Play Game</NavLink></ul>
+            <ul><NavLink to="/scores">High Scores</NavLink></ul>
+            <ul><NavLink to="/rules">Game Rules</NavLink></ul>
             <ul>
-              <li><NavLink to="/home.html">Home</NavLink></li>
-              <li><NavLink to="/login.html">Login</NavLink></li>
-              <li><NavLink to="/table.html">Play Game</NavLink></li>
-              <li><NavLink to="/scores.html">High Scores</NavLink></li>
-              <li><NavLink to="/rules.html">Game Rules</NavLink></li>
-              <li><a href="https://github.com/alvarjos/Startup">
-                <img src="/images/github-iccon.webp" alt="GitHub" className="github-image" /><br />Github</a></li>
+              <a href="https://github.com/alvarjos/Startup">
+                <img src="/images/github-icon.webp" alt="GitHub" className="github-image" />
+                <br />Github
+              </a>
             </ul>
-          </nav>
-        </main>
+            <br />
+        </nav>
+      </main>
     );
   }

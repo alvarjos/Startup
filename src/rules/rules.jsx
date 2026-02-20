@@ -4,13 +4,6 @@ import { NavLink } from 'react-router-dom';
 export function Rules() {
   return (
     <main className="background-image1">
-            <nav className="nav-bar">
-                <NavLink to="/home.html">Home Page</NavLink>                    
-                <NavLink to="/login.html">Login</NavLink>
-                <NavLink to="/table.html">Play Game</NavLink>
-                <NavLink to="/scores.html">High Scores</NavLink>
-                <NavLink to="/rules.html">Game Rules</NavLink>
-            </nav>
             
             <section className="rules-section">
                 <h2>Objective</h2>

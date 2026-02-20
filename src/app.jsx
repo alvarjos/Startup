@@ -1,8 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import App from './app.css';
+import './app.css';
 
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import { Home } from './home/home';
 import { Login } from './login/login';
 import { Scores } from './scores/scores';
@@ -13,31 +13,12 @@ import { Rules } from './rules/rules';
 export default function App() {
   return (
     <BrowserRouter>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="">
-            Home
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="login">
-            Login
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="scores">
-            Scores
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="rules">
-            Rules
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="table">
-            Table
-          </NavLink>
-        </li>
+      <header></header>
+      <body className='page'>
+        <div className='background-image1'>
+           <Layout></Layout>
+        </div>
+      </body>
 
         <Routes>
           <Route path='/' element={<Home />} exact />
@@ -48,13 +29,11 @@ export default function App() {
           <Route path='*' element={<NotFound />} />
         </Routes>
 
-        <footer className="bg-dark text-white-50">
-          <div className="container-fluid">
+        <footer className="footer">
             <span className="text-reset">Angel Alvarado</span>
             <a className="text-reset" href="https://github.com/webprogramming260/simon-react">
               Source
             </a>
-          </div>
         </footer>
     </BrowserRouter>
   );
@@ -62,4 +41,40 @@ export default function App() {
 
 function NotFound() {
   return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
+}
+
+function Layout() {
+  const location = useLocation();
+  const hideHeader = location.pathname === "/";
+  return (
+    <>     
+      {!hideHeader && <div className="nav-bar">
+        <ul className="nav-item">
+          <NavLink className="nav-link" to="">
+            Home
+          </NavLink>
+        </ul>
+        <ul className="nav-item">
+          <NavLink className="nav-link" to="login">
+            Login
+          </NavLink>
+        </ul>
+        <ul className="nav-item">
+          <NavLink className="nav-link" to="scores">
+            Scores
+          </NavLink>
+        </ul>
+        <ul className="nav-item">
+          <NavLink className="nav-link" to="rules">
+            Rules
+          </NavLink>
+        </ul>
+        <ul className="nav-item">
+          <NavLink className="nav-link" to="table">
+            Table
+          </NavLink>
+        </ul>
+      </div> }
+    </>
+  );
 }
