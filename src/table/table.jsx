@@ -7,7 +7,7 @@ export function Table() {
         <br /><br />
         <section>
             {/* <!-- Game interface elements would go here --> */}
-          <img src="/images/Table Design.drawio.png" alt="Game Table" />
+          <img src="Table Design.drawio.png" alt="Game Table" />
         </section>
             {/* <!-- Console Log
             <section id="consoleLog">

@@ -12,7 +12,7 @@ export function Home() {
             <ul><NavLink to="/rules">Game Rules</NavLink></ul>
             <ul>
               <a href="https://github.com/alvarjos/Startup">
-                <img src="/images/github-icon.webp" alt="GitHub" className="github-image" />
+                <img src="github-icon.webp" alt="GitHub" className="github-image" />
                 <br />Github
               </a>
             </ul>
