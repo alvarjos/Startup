@@ -8,13 +8,13 @@ import { Table } from './table/table';
 import { Rules } from './rules/rules';
 import { Scores } from './scores/scores';
 
-
-
 export default function App() {
+  const [user, setUser] = React.useState(localStorage.getItem('user') || '');
+
   return (
     <BrowserRouter>
       <div className="page background-image1"> 
-      <Layout></Layout>
+      <Layout user={user}></Layout>
       
       <main>
         <Routes>
@@ -42,7 +42,7 @@ function NotFound() {
   return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }
 
-function Layout() {
+function Layout({user}) {
   const location = useLocation();
   const hideHeader = location.pathname === "/";
   return (
@@ -59,11 +59,11 @@ function Layout() {
             Login
           </NavLink>
         </ul>
-        <ul>
+        {user && <ul>
           <NavLink className="nav-link" to="table">
             Table
           </NavLink>
-        </ul>
+        </ul>}
         <ul>
           <NavLink className="nav-link" to="rules">
             Rules
