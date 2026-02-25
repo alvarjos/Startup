@@ -7,7 +7,7 @@ export function Home({user}) {
         <nav className="main-nav">
             <ul><NavLink to="/">Home</NavLink></ul>
             <ul><NavLink to="/login">Login</NavLink></ul>
-            <ul>{user && <NavLink to="/table">Table</NavLink>}</ul>
+            {user && <ul><NavLink to="/table">Table</NavLink></ul>}
             <ul><NavLink to="/scores">High Scores</NavLink></ul>
             <ul><NavLink to="/rules">Game Rules</NavLink></ul>
             <ul>

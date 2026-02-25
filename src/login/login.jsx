@@ -1,12 +1,15 @@
 import { Button } from 'bootstrap';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-export function Login() {
+export function Login({setUser}) {
   const [text, setText] = React.useState('');
+  const navigate = useNavigate();
   function loginUser() {
-    console.log("Login button clicked");
     localStorage.setItem('user', text);
+    setUser(text);
+    navigate('/table');
   }
 
   function textChange(e) {

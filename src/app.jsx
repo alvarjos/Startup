@@ -10,7 +10,7 @@ import { Scores } from './scores/scores';
 
 export default function App() {
   const [user, setUser] = React.useState(localStorage.getItem('user') || '');
-
+  
   return (
     <BrowserRouter>
       <div className="page background-image1"> 
@@ -18,8 +18,8 @@ export default function App() {
       
       <main>
         <Routes>
-          <Route path='/' element={<Home />} exact />
-          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Home user={user}/>} exact />
+          <Route path='/login' element={<Login setUser={setUser} />} />
           <Route path='/table' element={<Table />} />
           <Route path='/scores' element={<Scores />} />
           <Route path='/rules' element={<Rules />} />
@@ -28,9 +28,9 @@ export default function App() {
       </main>
 
         <footer className="footer">
-            <span className="text-reset">Angel Alvarado </span>
+            <span className="text-reset">{user} - </span>
             <a className="text-reset" href="https://github.com/webprogramming260/simon-react">
-              Source
+              Github
             </a>
         </footer>
       </div>
@@ -54,16 +54,16 @@ function Layout({user}) {
             Home
           </NavLink>
         </ul>
-        <ul>
+        {user && <ul>
           <NavLink className="nav-link" to="login">
             Login
           </NavLink>
-        </ul>
-        {user && <ul>
+        </ul>}
+        <ul>
           <NavLink className="nav-link" to="table">
             Table
           </NavLink>
-        </ul>}
+        </ul>
         <ul>
           <NavLink className="nav-link" to="rules">
             Rules
@@ -74,7 +74,7 @@ function Layout({user}) {
             Scores
           </NavLink>
         </ul>
-      </div> 
+      </div>
       </header>}
     </>
   );
