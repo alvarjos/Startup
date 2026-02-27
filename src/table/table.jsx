@@ -18,11 +18,28 @@ export function Table() {
     <main className="background-image1">
         Game Table Area
         <br /><br />
-        <section>
-          {/*  Input new table here */}
-          <button onClick={handleNewGame}>New Game</button>
-          <button onClick={() => setGameState('hit')}>Hit</button>
-          <button onClick={() => setGameState('stand')}>Stand</button>
+        <section className="table-card-area">
+          <div className="table-card-row-label">Dealer</div>
+            <div className="table-card-row">          
+              <div className="card-placeholder-text">Card 1</div>
+              <div className="card-placeholder-text">Card 2</div>
+              <div className="card-placeholder-text">Card 3</div>
+              <div className="card-placeholder-text">Card 4</div>
+              <div className="card-placeholder-text">Card 5</div>
+          </div>
+          <div className="table-card-row-label">Player</div>
+            <div className="table-card-row">
+              <div className="card-placeholder-text">Card 1</div>
+              <div className="card-placeholder-text">Card 2</div>
+              <div className="card-placeholder-text">Card 3</div>
+              <div className="card-placeholder-text">Card 4</div>
+              <div className="card-placeholder-text">Card 5</div>
+            </div>
+          <div>
+            <button onClick={handleNewGame}>New Game</button>
+            <button onClick={() => setGameState('hit')}>Hit</button>
+            <button onClick={() => setGameState('stand')}>Stand</button>
+          </div>
         </section>
             {/* <!-- Console Log
             <section id="consoleLog">
