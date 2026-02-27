@@ -1,13 +1,28 @@
 import React from 'react';
+import { fullDeck } from './deck';
 
 export function Table() {
+  const [deck, setDeck] = React.useState([]);
+  const [playerHand, setPlayerHand] = React.useState([]);
+  const [dealerHand, setDealerHand] = React.useState([]);
+  const [gameState, setGameState] = React.useState('start');
+
+  function handleNewGame() {
+    setDeck(fullDeck());
+    setPlayerHand([]);
+    setDealerHand([]);
+    setGameState('start');
+  }
+
   return (
     <main className="background-image1">
         Game Table Area
         <br /><br />
         <section>
-            {/* <!-- Game interface elements would go here --> */}
-          <img src="Table Design.drawio.png" alt="Game Table" />
+          {/*  Input new table here */}
+          <button onClick={handleNewGame}>New Game</button>
+          <button onClick={() => setGameState('hit')}>Hit</button>
+          <button onClick={() => setGameState('stand')}>Stand</button>
         </section>
             {/* <!-- Console Log
             <section id="consoleLog">
