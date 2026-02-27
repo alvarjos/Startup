@@ -14,30 +14,35 @@ export function Table() {
     setGameState('start');
   }
 
+  function handleHit() {
+    setPlayerHand((hand) => [...hand, 'Card']);
+    setGameState('hit');
+  }
+
   return (
     <main className="background-image1">
         Game Table Area
         <br /><br />
         <section className="table-card-area">
           <div className="table-card-row-label">Dealer</div>
-            <div className="table-card-row">          
-              <div className="card-placeholder-text">Card 1</div>
-              <div className="card-placeholder-text">Card 2</div>
-              <div className="card-placeholder-text">Card 3</div>
-              <div className="card-placeholder-text">Card 4</div>
-              <div className="card-placeholder-text">Card 5</div>
+          <div className="table-card-row">
+            {dealerHand.map((label, index) => (
+              <div key={`dealer-${index}`} className="card-placeholder-text">
+                {label}
+              </div>
+            ))}
           </div>
-          <div className="table-card-row-label">Player</div>
-            <div className="table-card-row">
-              <div className="card-placeholder-text">Card 1</div>
-              <div className="card-placeholder-text">Card 2</div>
-              <div className="card-placeholder-text">Card 3</div>
-              <div className="card-placeholder-text">Card 4</div>
-              <div className="card-placeholder-text">Card 5</div>
-            </div>
+          <div className="table-card-row-label">Player</div>  
+          <div className="table-card-row">
+            {playerHand.map((label, index) => (
+              <div key={`player-${index}`} className="card-placeholder-text">
+                {label}
+              </div>
+            ))}
+          </div>
           <div>
             <button onClick={handleNewGame}>New Game</button>
-            <button onClick={() => setGameState('hit')}>Hit</button>
+            <button onClick={handleHit}>Hit</button>
             <button onClick={() => setGameState('stand')}>Stand</button>
           </div>
         </section>
