@@ -52,18 +52,28 @@ export function Table() {
         <section className="table-card-area">
           <div className="table-card-row-label">Dealer</div>
           <div className="table-card-row">
-            {dealerHand.map((label, index) => (
-              <div key={`dealer-${index}`} className="card-placeholder-text">
-                {label}
-              </div>
-            ))}
+            {dealerHand.map((cardId, index) => {
+              const src = getCardImageSrc(cardId);
+              const label = getCardLabel(cardId) ?? getCardValue(cardId) ?? cardId;
+              return (
+                <div key={`dealer-${index}`} className="card-placeholder-text">
+                  {src ? (
+                    <div className="card-wrapper">
+                      <img className="card-placeholder-img" src={src} alt={`Card ${cardId}`} />
+                      <div className="card-number-overlay">{label}</div>
+                    </div>
+                  ) : (
+                    cardId
+                  )}
+                </div>
+              )
+            })}
           </div>
           <div className="table-card-row-label">Player</div>
           <div className="table-card-row">
             {playerHand.map((cardId, index) => {
               const src = getCardImageSrc(cardId);
               const label = getCardLabel(cardId) ?? getCardValue(cardId) ?? cardId;
-
               return (
                 <div key={`player-${index}`} className="card-placeholder-text">
                   {src ? (
