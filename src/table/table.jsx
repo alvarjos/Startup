@@ -88,10 +88,10 @@ export function Table() {
               );
             })}
           </div>
-          <div>
-            <button onClick={handleNewGame}>New Game</button>
-            <button onClick={handleHit}>Hit</button>
-            <button onClick={() => setGameState('stand')}>Stand</button>
+          <div className="table-button-container">
+            <button className="table-button" onClick={handleNewGame}>New Game</button>
+            <button className="table-button" onClick={handleHit}>Hit</button>
+            <button className="table-button" onClick={() => setGameState('stand')}>Stand</button>
           </div>
         </section>
             {/* <!-- Console Log
