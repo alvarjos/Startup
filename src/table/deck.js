@@ -17,6 +17,8 @@ export function getCardLabel(cardId) {
     return 'Queen';
   } else if (cardId == 13 || cardId == 26 || cardId == 39 || cardId == 52) {
     return 'King';
+  } else if (cardId == 1 || cardId == 14 || cardId == 27 || cardId == 40) {
+    return 'Ace';
   }
 }
 
@@ -33,25 +35,12 @@ export function getCardImageSrc(cardId) {
 } 
 
 export function getCardValue(cardId) {
-  if (cardId == 14 || cardId == 27 || cardId == 40) {
-    return 1;
-    } else if (cardId == 15 || cardId == 28 || cardId == 41) {
-      return 2;
-    } else if (cardId == 16 || cardId == 29 || cardId == 42) {
-      return 3;
-    } else if (cardId == 17 || cardId == 30 || cardId == 43) {
-      return 4;
-    } else if (cardId == 18 || cardId == 31 || cardId == 44) {
-      return 5;
-    } else if (cardId == 19 || cardId == 32 || cardId == 45) {
-      return 6;
-    } else if (cardId == 20 || cardId == 33 || cardId == 46) {
-      return 7;
-    } else if (cardId == 21 || cardId == 34 || cardId == 47) {
-      return 8;
-    } else if (cardId == 22 || cardId == 35 || cardId == 48) {
-      return 9;
-    } else if (cardId == 23 || cardId == 36 || cardId == 49) {
-      return 10;
-    }
+  const cardValue = ((cardId - 1) % 13) + 1;
+
+  // Face card values
+  if (cardValue > 10) {
+    return 10; 
+  }
+  return cardValue; 
 }
+
