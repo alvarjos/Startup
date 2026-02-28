@@ -6,6 +6,7 @@ export function Table() {
   const [deck, setDeck] = React.useState([]);
   const [playerHand, setPlayerHand] = React.useState([]);
   const [dealerHand, setDealerHand] = React.useState([]);
+  const [bustPopup, setBustPopup] = React.useState(null); // { who: 'player'|'dealer', total: number } or null
   const [gameState, setGameState] = React.useState('start');
 
   function drawRandomCard(target) {
@@ -28,13 +29,6 @@ export function Table() {
     });
   }
 
-  function handleNewGame() {
-    setDeck(fullDeck());
-    setPlayerHand([]);
-    setDealerHand([]);
-    setGameState('start');
-  }
-
   function handleHit() {
     drawRandomCard('player');
     setGameState('hit');
@@ -48,8 +42,34 @@ export function Table() {
   const playerTotal = playerHand.reduce((sum, cardId) => sum + (getCardValue(cardId) ?? 0), 0);
   const dealerTotal = dealerHand.reduce((sum, cardId) => sum + (getCardValue(cardId) ?? 0), 0);
 
+  React.useEffect(() => {
+    if (playerTotal > 21) {
+      setBustPopup({ who: 'Player', total: playerTotal });
+    } else if (dealerTotal > 21) {
+      setBustPopup({ who: 'Dealer', total: dealerTotal });
+    }
+  }, [playerTotal, dealerTotal]);
+
+  function handleNewGame() {
+    setDeck(fullDeck());
+    setPlayerHand([]);
+    setDealerHand([]);
+    setGameState('start');
+    setBustPopup(null);
+  }
+
   return (
     <main className="background-image1">
+        {bustPopup && (
+          <div className="table-bust-overlay" role="alert">
+            <div className="table-bust-popup">
+              <p className="table-bust-message">
+                {bustPopup.who} busts! Total is {bustPopup.total} (over 21).
+              </p>
+              <button className="table-button" onClick={() => setBustPopup(null)}>OK</button>
+            </div>
+          </div>
+        )}
         Game Table Area
         <br /><br />
         <section className="table-card-area">

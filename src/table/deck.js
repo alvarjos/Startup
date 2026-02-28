@@ -43,4 +43,3 @@ export function getCardValue(cardId) {
   }
   return cardValue; 
 }
-
