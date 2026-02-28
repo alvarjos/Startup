@@ -7,6 +7,7 @@ export function Table() {
   const [playerHand, setPlayerHand] = React.useState([]);
   const [dealerHand, setDealerHand] = React.useState([]);
   const [bustPopup, setBustPopup] = React.useState(null); // { who: 'player'|'dealer', total: number } or null
+  const [winPopup, setWinPopup] = React.useState(null); // { who: 'player'|'dealer', total: number } or null
   const [gameState, setGameState] = React.useState('start');
 
   function drawRandomCard(target) {
@@ -48,6 +49,11 @@ export function Table() {
     } else if (dealerTotal > 21) {
       setBustPopup({ who: 'Dealer', total: dealerTotal });
     }
+    if (playerTotal === 21) {
+      setWinPopup({ who: 'Player', total: playerTotal });
+    } else if (dealerTotal === 21) {
+      setWinPopup({ who: 'Dealer', total: dealerTotal });
+    }
   }, [playerTotal, dealerTotal]);
 
   function handleNewGame() {
@@ -67,6 +73,15 @@ export function Table() {
                 {bustPopup.who} busts! Total is {bustPopup.total} (over 21).
               </p>
               <button className="table-button" onClick={() => setBustPopup(null)}>OK</button>
+            </div>
+          </div>
+        )}
+        {winPopup && (
+          <div className="table-win-overlay" role="alert">
+            <div className="table-win-popup">
+              <p className="table-win-message">
+                {winPopup.who} wins! Total is {winPopup.total} (21).
+              </p>
             </div>
           </div>
         )}
