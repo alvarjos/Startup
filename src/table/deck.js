@@ -11,11 +11,11 @@ export function fullDeck() {
 }
 
 export function getCardLabel(cardId) {
-  if (cardId == 11 || cardId == 25 || cardId == 39 || cardId == 50) {
+  if (cardId == 11 || cardId == 24 || cardId == 37 || cardId == 50) {
     return 'Jack';
-  } else if (cardId == 12 || cardId == 26 || cardId == 40 || cardId == 51) {
+  } else if (cardId == 12 || cardId == 25 || cardId == 38 || cardId == 51) {
     return 'Queen';
-  } else if (cardId == 13 || cardId == 27 || cardId == 41 || cardId == 52) {
+  } else if (cardId == 13 || cardId == 26 || cardId == 39 || cardId == 52) {
     return 'King';
   }
 }
