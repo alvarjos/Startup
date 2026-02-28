@@ -45,6 +45,9 @@ export function Table() {
     }, 1000);
   }
 
+  const playerTotal = playerHand.reduce((sum, cardId) => sum + (getCardValue(cardId) ?? 0), 0);
+  const dealerTotal = dealerHand.reduce((sum, cardId) => sum + (getCardValue(cardId) ?? 0), 0);
+
   return (
     <main className="background-image1">
         Game Table Area
@@ -69,6 +72,7 @@ export function Table() {
               )
             })}
           </div>
+          <div className="table-card-row-value">Dealer (Total: {dealerTotal})</div>
           <div className="table-card-row-label">Player</div>
           <div className="table-card-row">
             {playerHand.map((cardId, index) => {
@@ -88,6 +92,7 @@ export function Table() {
               );
             })}
           </div>
+          <div className="table-card-row-value">Player (Total: {playerTotal})</div>
           <div className="table-button-container">
             <button className="table-button" onClick={handleNewGame}>New Game</button>
             <button className="table-button" onClick={handleHit}>Hit</button>
