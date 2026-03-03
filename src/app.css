@@ -174,11 +174,26 @@ footer {
 }
 
 
+.scores-your-wins {
+    margin: 1em auto;
+    text-align: center;
+}
+
+.scores-total-wins {
+    font-size: 2em;
+    font-weight: bold;
+}
+
 .scores-tables {
     margin: 20px auto;
     width: 75%;
     align-items: center;
     align-content: center;
+}
+
+#scoresTable tr.scores-current-user td {
+    background-color: #e7f3ff;
+    font-weight: bold;
 }
 
 #scoresTable {

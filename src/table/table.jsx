@@ -2,13 +2,14 @@ import React from 'react';
 import { fullDeck, getCardLabel, getCardImageSrc, getCardValue } from './deck';
 
 
-export function Table() {
+export function Table({ user, onPlayerWin }) {
   const [deck, setDeck] = React.useState([]);
   const [playerHand, setPlayerHand] = React.useState([]);
   const [dealerHand, setDealerHand] = React.useState([]);
-  const [bustPopup, setBustPopup] = React.useState(null); // { who: 'player'|'dealer', total: number } or null
-  const [winPopup, setWinPopup] = React.useState(null); // { who: 'player'|'dealer', total: number } or null
-  const [gameState, setGameState] = React.useState('start');
+  const [bustPopup, setBustPopup] = React.useState(null); // { who: 'Player'|'Dealer', total: number } or null
+  const [winPopup, setWinPopup] = React.useState(null); // { who: string, message: string } or null
+  const [gameState, setGameState] = React.useState('start'); // 'start' | 'playing' | 'dealerTurn' | 'roundOver'
+  const recordedWinThisRound = React.useRef(false);
 
   function drawRandomCard(target) {
     setDeck((currentDeck) => {
@@ -31,13 +32,14 @@ export function Table() {
   }
 
   function handleHit() {
+    if (gameState === 'dealerTurn' || gameState === 'roundOver') return;
     drawRandomCard('player');
-    setGameState('hit');
+    setGameState('playing');
+  }
 
-    // The dealer hits 1 second after the player hits to allow some time between player and dealer to replicate a real game
-    setTimeout(() => {
-      drawRandomCard('dealer');
-    }, 1000);
+  function handleStand() {
+    if (gameState === 'dealerTurn' || gameState === 'roundOver') return;
+    setGameState('dealerTurn');
   }
 
   const playerTotal = playerHand.reduce((sum, cardId) => sum + (getCardValue(cardId) ?? 0), 0);
@@ -46,15 +48,49 @@ export function Table() {
   React.useEffect(() => {
     if (playerTotal > 21) {
       setBustPopup({ who: 'Player', total: playerTotal });
-    } else if (dealerTotal > 21) {
+    } else if (dealerTotal > 21 && gameState !== 'dealerTurn') {
       setBustPopup({ who: 'Dealer', total: dealerTotal });
     }
-    if (playerTotal === 21) {
-      setWinPopup({ who: 'Player', total: playerTotal });
-    } else if (dealerTotal === 21) {
-      setWinPopup({ who: 'Dealer', total: dealerTotal });
+    if (playerTotal === 21 && playerHand.length >= 2) {
+      setWinPopup({ who: 'Player', message: `Blackjack! Total is ${playerTotal}.` });
+      if (!recordedWinThisRound.current) {
+        recordedWinThisRound.current = true;
+        onPlayerWin?.(user);
+      }
+    } else if (dealerTotal === 21 && dealerHand.length >= 2 && gameState !== 'dealerTurn') {
+      setWinPopup({ who: 'Dealer', message: `Blackjack! Total is ${dealerTotal}.` });
     }
-  }, [playerTotal, dealerTotal]);
+  }, [playerTotal, dealerTotal, gameState, playerHand.length, dealerHand.length]);
+
+  React.useEffect(() => {
+    if (gameState !== 'dealerTurn') return;
+    if (dealerTotal > 21) {
+      setWinPopup({ who: 'Player', message: 'Dealer busted! You win.' });
+      if (!recordedWinThisRound.current) {
+        recordedWinThisRound.current = true;
+        onPlayerWin?.(user);
+      }
+      setGameState('roundOver');
+      return;
+    }
+    if (dealerTotal >= 17) {
+      if (playerTotal > dealerTotal) {
+        setWinPopup({ who: 'Player', message: `You win! ${playerTotal} beats ${dealerTotal}.` });
+        if (!recordedWinThisRound.current) {
+          recordedWinThisRound.current = true;
+          onPlayerWin?.(user);
+        }
+      } else if (dealerTotal > playerTotal) {
+        setWinPopup({ who: 'Dealer', message: `Dealer wins! ${dealerTotal} beats ${playerTotal}.` });
+      } else {
+        setWinPopup({ who: null, message: `Push. Both have ${playerTotal}.` });
+      }
+      setGameState('roundOver');
+      return;
+    }
+    const t = setTimeout(() => drawRandomCard('dealer'), 800);
+    return () => clearTimeout(t);
+  }, [gameState, dealerTotal, playerTotal]);
 
   function handleNewGame() {
     setDeck(fullDeck());
@@ -62,6 +98,8 @@ export function Table() {
     setDealerHand([]);
     setGameState('start');
     setBustPopup(null);
+    setWinPopup(null);
+    recordedWinThisRound.current = false;
   }
 
   return (
@@ -77,11 +115,12 @@ export function Table() {
           </div>
         )}
         {winPopup && (
-          <div className="table-win-overlay" role="alert">
-            <div className="table-win-popup">
-              <p className="table-win-message">
-                {winPopup.who} wins! Total is {winPopup.total} (21).
+          <div className="table-bust-overlay" role="alert">
+            <div className="table-bust-popup">
+              <p className="table-bust-message">
+                {winPopup.who ? `${winPopup.who} wins! ` : ''}{winPopup.message}
               </p>
+              <button className="table-button" onClick={() => setWinPopup(null)}>OK</button>
             </div>
           </div>
         )}
@@ -130,8 +169,8 @@ export function Table() {
           <div className="table-card-row-value">Player (Total: {playerTotal})</div>
           <div className="table-button-container">
             <button className="table-button" onClick={handleNewGame}>New Game</button>
-            <button className="table-button" onClick={handleHit}>Hit</button>
-            <button className="table-button" onClick={() => setGameState('stand')}>Stand</button>
+            <button className="table-button" onClick={handleHit} disabled={gameState === 'dealerTurn' || gameState === 'roundOver'}>Hit</button>
+            <button className="table-button" onClick={handleStand} disabled={gameState === 'dealerTurn' || gameState === 'roundOver' || playerHand.length === 0}>Stand</button>
           </div>
         </section>
             {/* <!-- Console Log
