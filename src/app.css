@@ -60,6 +60,7 @@ body {
     block-size: 1.5em;
     font-family: Times New Roman, sans-serif;
     font-weight: bold;
+    min-height: 2em;
 }
 
 header {

@@ -17,14 +17,15 @@ export function Login({setUser}) {
   }
 
   return (
-    <main className="background-image1">
+    <main >
+      <br></br>
       Login Form:
       <form className="login-form" action="/submit_login" method="post">
           <label className="login-form-label" htmlFor="username">Username:</label>
-          <input className="login-form-label" type="text" id="username" name="username" required onChange={textChange}/><br /><br />
+          <input className="login-form-label" type="text" id="username" name="username" required onChange={textChange}/>
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" name="password" required /><br /><br />
-          <button type ="button" onClick={loginUser}>Login</button>
+          <button className="table-button" type ="button" onClick={loginUser}>Login</button>
       </form>    
     </main>
   );
