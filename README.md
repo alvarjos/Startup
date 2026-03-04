@@ -103,8 +103,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - I added the functionality of the applicaiton to work with the user, dealer, player and the game. You are able to login, logout, navigate between the pages, and play the game.
+- [x] **Hooks** - I added hooks to the applicaiton to manage the user functionality like login, logout, player wins, dealer wins, and the game logic.
 
 ## 🚀 Service deliverable
 
