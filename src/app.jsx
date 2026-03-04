@@ -73,9 +73,12 @@ function NotFound() {
   return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }
 
+const LOGOUT_PATHS = ['/table', '/rules', '/scores'];
+
 function Layout({user}) {
   const location = useLocation();
   const hideHeader = location.pathname === "/";
+  const showLogout = LOGOUT_PATHS.includes(location.pathname);
   return (
     < >     
       {!hideHeader && <header>
@@ -105,6 +108,13 @@ function Layout({user}) {
             Scores
           </NavLink>
         </ul>
+        {showLogout && (
+          <ul>
+            <NavLink className="nav-link" to="/">
+              Logout
+            </NavLink>
+          </ul>
+        )}
       </div>
       </header>}
     </>
