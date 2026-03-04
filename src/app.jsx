@@ -1,7 +1,7 @@
 import React from 'react';
 import './app.css';
 
-import { BrowserRouter, NavLink, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import { Home } from './home/home';
 import { Login } from './login/login';
 import { Table } from './table/table';
@@ -42,16 +42,21 @@ export default function App() {
     });
   }
 
+  function logOut() {
+    localStorage.removeItem('user');
+    setUser('');
+  }
+
   return (
     <BrowserRouter>
       <div className="page background-image1"> 
-      <Layout user={user}></Layout>
+      <Layout user={user} onLogOut={logOut}></Layout>
       
       <main>
         <Routes>
           <Route path='/' element={<Home user={user}/>} exact />
           <Route path='/login' element={<Login setUser={setUser} />} />
-          <Route path='/table' element={<Table user={user} onPlayerWin={addWinForPlayer} />} />
+          <Route path='/table' element={user ? <Table user={user} onPlayerWin={addWinForPlayer} /> : <Navigate to="/login" />} />
           <Route path='/scores' element={<Scores user={user} playerWins={playerWins} />} />
           <Route path='/rules' element={<Rules />} />
           <Route path='*' element={<NotFound />} />
@@ -75,7 +80,7 @@ function NotFound() {
 
 const LOGOUT_PATHS = ['/table', '/rules', '/scores'];
 
-function Layout({user}) {
+function Layout({user, onLogOut}) {
   const location = useLocation();
   const hideHeader = location.pathname === "/";
   const showLogout = LOGOUT_PATHS.includes(location.pathname);
@@ -110,7 +115,7 @@ function Layout({user}) {
         </ul>
         {showLogout && (
           <ul>
-            <NavLink className="nav-link" to="/">
+            <NavLink className="nav-link" to="/" onClick={onLogOut}>
               Logout
             </NavLink>
           </ul>
