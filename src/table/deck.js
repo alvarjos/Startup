@@ -24,13 +24,13 @@ export function getCardLabel(cardId) {
 
 export function getCardImageSrc(cardId) {
   if (cardId >= 1 && cardId <= 13) {
-    return '/public/cards/Spade_Card.png';
+    return '/cards/Spade_Card.png';
   } else if (cardId >= 14 && cardId <= 26) {
-    return '/public/cards/Clubs_Card.png';
+    return '/cards/Clubs_Card.png';
   } else if (cardId >= 27 && cardId <= 39) {
-    return '/public/cards/Hearts_Card.png';
+    return '/cards/Hearts_Card.png';
   } else if (cardId >= 40 && cardId <= 52) {
-    return '/public/cards/Diamond_Card.png';
+    return '/cards/Diamond_Card.png';
   }
 } 
 
