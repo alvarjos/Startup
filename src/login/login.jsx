@@ -1,32 +1,82 @@
 import { Button } from 'bootstrap';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export function Login({setUser}) {
-  const [text, setText] = React.useState('');
+export function Login({ setUser }) {
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [error, setError] = React.useState(null);
   const navigate = useNavigate();
-  function loginUser() {
-    localStorage.setItem('user', text);
-    setUser(text);
-    navigate('/table');
+
+  async function loginUser() {
+    setError(null);
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+      credentials: 'include',
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setUser(data.username);
+      navigate('/table');
+    } else {
+      const data = await res.json().catch(() => ({}));
+      setError(data.msg || 'Login failed');
+    }
   }
 
-  function textChange(e) {
-    setText(e.target.value);
+  async function createUser() {
+    setError(null);
+    const res = await fetch('/api/auth/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+      credentials: 'include',
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setUser(data.username);
+      navigate('/table');
+    } else {
+      const data = await res.json().catch(() => ({}));
+      setError(data.msg || 'Create account failed');
+    }
   }
 
   return (
-    <main >
-      <br></br>
+    <main>
+      <br />
       Login Form:
-      <form className="login-form" action="/submit_login" method="post">
-          <label className="login-form-label" htmlFor="username">Username:</label>
-          <input className="login-form-label" type="text" id="username" name="username" required onChange={textChange}/>
-          <label htmlFor="password">Password:</label>
-          <input type="password" id="password" name="password" required /><br /><br />
-          <button className="table-button" type ="button" onClick={loginUser}>Login</button>
-      </form>    
+      <form className="login-form">
+        <label className="login-form-label" htmlFor="username">Username:</label>
+        <input
+          className="login-form-label"
+          type="text"
+          id="username"
+          name="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <br /><br />
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <button className="table-button" type="button" onClick={loginUser} disabled={!username || !password}>
+          Login
+        </button>
+        <button className="table-button" type="button" onClick={createUser} disabled={!username || !password}>
+          Create account
+        </button>
+      </form>
     </main>
   );
 }

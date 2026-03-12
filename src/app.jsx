@@ -42,8 +42,8 @@ export default function App() {
     });
   }
 
-  function logOut() {
-    localStorage.removeItem('user');
+  async function logOut() {
+    await fetch('/api/auth/logout', { method: 'DELETE', credentials: 'include' });
     setUser('');
   }
 
