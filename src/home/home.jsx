@@ -24,6 +24,7 @@ export function Home({user}) {
     const latitude = 40.23; 
     const longitude = -111.66;
 
+
     const url =
       `https://api.open-meteo.com/v1/forecast` +
       `?latitude=${latitude}&longitude=${longitude}` +
@@ -53,7 +54,7 @@ export function Home({user}) {
             </ul>
             <ul>
               {weather && (
-                <p>Current Temperature: {(weather * 9 /5 + 32).toFixed(1)}°F</p>
+                <p>Current Temperature in Provo, UT: {(weather * 9 /5 + 32).toFixed(1)}°F</p>
               )}
               {weatherError && (
                 <p>Error: {weatherError}</p>
