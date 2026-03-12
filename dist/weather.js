@@ -1,8 +1,8 @@
 import { fetchWeatherApi } from "openmeteo";
 
 const params = {
-	latitude: 40.23,
-	longitude: -111.66,
+	latitude: 52.52,
+	longitude: 13.41,
 	hourly: "temperature_2m",
 	current: "temperature_2m",
 };
@@ -24,21 +24,21 @@ console.log(
 	`\nTimezone difference to GMT+0: ${utcOffsetSeconds}s`,
 );
 
-const current = response.current();
-const hourly = response.hourly();
+const current = response.current()!;
+const hourly = response.hourly()!;
 
 // Note: The order of weather variables in the URL query and the indices below need to match!
 const weatherData = {
 	current: {
 		time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
-		temperature_2m: current.variables(0).value(),
+		temperature_2m: current.variables(0)!.value(),
 	},
 	hourly: {
 		time: Array.from(
 			{ length: (Number(hourly.timeEnd()) - Number(hourly.time())) / hourly.interval() }, 
 			(_, i) => new Date((Number(hourly.time()) + i * hourly.interval() + utcOffsetSeconds) * 1000)
 		),
-		temperature_2m: hourly.variables(0).valuesArray(),
+		temperature_2m: hourly.variables(0)!.valuesArray(),
 	},
 };
 
