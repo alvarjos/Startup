@@ -110,12 +110,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - I set up node.js and express to create the backend and frontend services. I have the server running and able to serve the frontend files as well as handle requests from the frontend.
+- [x] **Static middleware for frontend** - I added the static middleware to my index.js file to serve the frontend files from public.
+- [x] **Calls to third party endpoints** - I added the weather endpoint to call from meteo API to get the current weather in provo. It is located on the home page. 
+- [x] **Backend service endpoints** - I added the endpoints for the backend to keep track of scores, login information and the game state.
+- [x] **Frontend calls service endpoints** - The frontend is able to call the backend endpoints to get the weather, login, logout, and the game state.
+- [x] **Supports registration, login, logout, and restricted endpoint** - The application supports login, logout and user registration. The login and registration information is stored in the database. The application also has a restricted endpoint that only logged in users can access.
 
 ## 🚀 DB deliverable
 
