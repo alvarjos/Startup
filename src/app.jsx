@@ -59,48 +59,55 @@ function NotFound() {
 
 const LOGOUT_PATHS = ['/table', '/rules', '/scores'];
 
-function Layout({user, onLogOut}) {
+function Layout({ user, onLogOut }) {
   const location = useLocation();
+  const [menuOpen, setMenuOpen] = React.useState(false);
   const hideHeader = location.pathname === "/";
   const showLogout = LOGOUT_PATHS.includes(location.pathname);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    < >     
-      {!hideHeader && <header>
-        <div className="nav-bar">
-        <ul>
-          <NavLink className="nav-link" to="/">
-            Home
-          </NavLink>
-        </ul>
-        {user && <ul>
-          <NavLink className="nav-link" to="login">
-            Login
-          </NavLink>
-        </ul>}
-        <ul>
-          <NavLink className="nav-link" to="table">
-            Table
-          </NavLink>
-        </ul>
-        <ul>
-          <NavLink className="nav-link" to="rules">
-            Rules
-          </NavLink>
-        </ul>
-        <ul>
-          <NavLink className="nav-link" to="scores">
-            Scores
-          </NavLink>
-        </ul>
-        {showLogout && (
-          <ul>
-            <NavLink className="nav-link" to="/" onClick={onLogOut}>
-              Logout
-            </NavLink>
-          </ul>
-        )}
-      </div>
-      </header>}
+    <>
+      {!hideHeader && (
+        <header className={menuOpen ? "nav-menu-open" : ""}>
+          <div className="nav-bar">
+            <button
+              type="button"
+              className="nav-menu-btn"
+              aria-label="Toggle menu"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((o) => !o)}
+            >
+              Menu
+            </button>
+            <nav className="nav-links">
+              <ul>
+                <NavLink className="nav-link" to="/" onClick={closeMenu}>Home</NavLink>
+              </ul>
+              {user && (
+                <ul>
+                  <NavLink className="nav-link" to="login" onClick={closeMenu}>Login</NavLink>
+                </ul>
+              )}
+              <ul>
+                <NavLink className="nav-link" to="table" onClick={closeMenu}>Table</NavLink>
+              </ul>
+              <ul>
+                <NavLink className="nav-link" to="rules" onClick={closeMenu}>Rules</NavLink>
+              </ul>
+              <ul>
+                <NavLink className="nav-link" to="scores" onClick={closeMenu}>Scores</NavLink>
+              </ul>
+              {showLogout && (
+                <ul>
+                  <NavLink className="nav-link" to="/" onClick={() => { closeMenu(); onLogOut(); }}>Logout</NavLink>
+                </ul>
+              )}
+            </nav>
+          </div>
+        </header>
+      )}
     </>
   );
 }

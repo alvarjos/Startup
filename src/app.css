@@ -19,39 +19,87 @@ body {
   flex-direction: column;
 }
 
-.nav-bar{
+.nav-bar {
     border-color: rgb(255, 255, 255);
     border-width: 5px;
     margin: 0%;
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     font-size: 1.7em;
     color: white;
-    justify-content: space-between;
-    align-items: center;
-    justify-items: auto;
+    justify-content: center;
     padding-left: 5%;
     padding-right: 5%;
-    a:link {
-        color: white;
-    }
-    a:visited {
-        color: white;
-    }
+}
+.nav-bar a:link,
+.nav-bar a:visited {
+    color: white;
+}
+.nav-bar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
 }
 
-.nav-bar::before {
-    content: none;
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1em;
+    justify-content: center;
+}
+
+.nav-menu-btn {
     display: none;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.5em;
 }
 
 @media (max-width: 768px) {
-    .nav-bar::before {
-        content: "Menu";
+    .nav-bar {
+        justify-content: center;
+    }
+    .nav-menu-btn {
         display: block;
-        color: white;
-        font-size: 1em;
-        font-weight: bold;
+        justify-content: center;
+    }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(50, 123, 50);
+        padding: 0.5em 0;
+        gap: 0;
+        border: 2px solid rgb(255, 255, 255);
+        border-top: none;
+        z-index: 10;
+    }
+    .nav-links ul {
+        width: 100%;
+        text-align: center;
+        padding: 0.5em 5%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        justify-content: center;
+    }
+    .nav-links ul:last-child {
+        border-bottom: none;
+        justify-content: center;
+    }
+    header.nav-menu-open .nav-links {
+        display: flex;
     }
 }
 
@@ -80,16 +128,14 @@ body {
 }
 
 header {
+    position: relative;
     flex: 0;
     background-color: rgb(50, 123, 50);
     color: white;
     border-color: rgb(255, 255, 255);
     border-style: solid;
     border-width: 5px;
-    align-items: center;
-    margin: 0%;
-    justify-content: center;
-    text-align: center;
+    padding: 1em;
     font-size: 20px;
     font-weight: bold;
     font-family: Times New Roman, sans-serif;
