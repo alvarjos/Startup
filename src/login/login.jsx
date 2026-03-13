@@ -68,11 +68,12 @@ export function Login({ setUser }) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <br /><br />
+        <br />
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <button className="table-button" type="button" onClick={loginUser} disabled={!username || !password}>
           Login
         </button>
+        <br />
         <button className="table-button" type="button" onClick={createUser} disabled={!username || !password}>
           Create account
         </button>
