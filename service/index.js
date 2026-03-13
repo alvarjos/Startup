@@ -72,44 +72,32 @@ const verifyAuth = async (req, res, next) => {
 
 // GetScores
 apiRouter.get('/scores', verifyAuth, (_req, res) => {
-  console.log("In Scores");
-  res.send(scores);
-}); 
+  const sorted = [...scores].sort((a, b) => (b.wins || 0) - (a.wins || 0));
+  res.send(sorted);
+});
 
 // Test
 var testdata = {test:"testdata"};
 apiRouter.get('/test', verifyAuth, (_req, res) => {
-  console.log("In Test");
   res.send(testdata);
 });
 
 // SubmitScore
 apiRouter.post('/score', verifyAuth, (req, res) => {
-  scores = updateScores(req.body);
-  res.send(scores);
-});
-
-// updateScores considers a new score for inclusion in the high scores.
-function updateScores(newScore) {
-    let found = false;
-    for (const [i, prevScore] of scores.entries()) {
-      if (newScore.score > prevScore.score) {
-        scores.splice(i, 0, newScore);
-        found = true;
-        break;
-      }
-    }
-  
-    if (!found) {
-      scores.push(newScore);
-    }
-  
-    if (scores.length > 10) {
-      scores.length = 10;
-    }
-  
-    return scores;
+  const username = (req.body && req.body.username) ? String(req.body.username).trim() : '';
+  if (!username) {
+    res.status(400).json({ msg: 'username required' });
+    return;
   }
+  const entry = scores.find((s) => (s.username || '').toLowerCase() === username.toLowerCase());
+  if (entry) {
+    entry.wins = (entry.wins || 0) + 1;
+  } else {
+    scores.push({ username, wins: 1 });
+  }
+  const sorted = [...scores].sort((a, b) => (b.wins || 0) - (a.wins || 0));
+  res.send(sorted);
+});
 
   async function createUser(username, password) {
     const passwordHash = await bcrypt.hash(password, 10);

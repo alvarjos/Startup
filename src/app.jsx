@@ -8,37 +8,16 @@ import { Table } from './table/table';
 import { Rules } from './rules/rules';
 import { Scores } from './scores/scores';
 
-const PLAYER_WINS_KEY = 'playerWins';
-
-function loadPlayerWins() {
-  try {
-    const raw = localStorage.getItem(PLAYER_WINS_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function savePlayerWins(arr) {
-  localStorage.setItem(PLAYER_WINS_KEY, JSON.stringify(arr));
-}
-
 export default function App() {
   const [user, setUser] = React.useState(localStorage.getItem('user') || '');
-  const [playerWins, setPlayerWins] = React.useState(() => loadPlayerWins());
 
-  function addWinForPlayer(username) {
+  async function addWinForPlayer(username) {
     if (!username) return;
-    setPlayerWins((prev) => {
-      const next = [...prev];
-      const i = next.findIndex((p) => p.username === username);
-      if (i >= 0) {
-        next[i] = { ...next[i], wins: next[i].wins + 1 };
-      } else {
-        next.push({ username, wins: 1 });
-      }
-      savePlayerWins(next);
-      return next;
+    await fetch('/api/score', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username }),
+      credentials: 'include',
     });
   }
 
@@ -57,7 +36,7 @@ export default function App() {
           <Route path='/' element={<Home user={user}/>} exact />
           <Route path='/login' element={<Login setUser={setUser} />} />
           <Route path='/table' element={user ? <Table user={user} onPlayerWin={addWinForPlayer} /> : <Navigate to="/login" />} />
-          <Route path='/scores' element={<Scores user={user} playerWins={playerWins} />} />
+          <Route path='/scores' element={<Scores user={user} />} />
           <Route path='/rules' element={<Rules />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
