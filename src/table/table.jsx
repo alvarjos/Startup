@@ -39,6 +39,7 @@ export function Table({ user, onPlayerWin }) {
 
   function handleStand() {
     if (gameState === 'dealerTurn' || gameState === 'roundOver') return;
+    if (playerTotal > 21) return;
     setGameState('dealerTurn');
   }
 
@@ -48,6 +49,7 @@ export function Table({ user, onPlayerWin }) {
   React.useEffect(() => {
     if (playerTotal > 21) {
       setBustPopup({ who: 'Player', total: playerTotal });
+      setGameState('roundOver');
     } else if (dealerTotal > 21 && gameState !== 'dealerTurn') {
       setBustPopup({ who: 'Dealer', total: dealerTotal });
     }
@@ -59,7 +61,7 @@ export function Table({ user, onPlayerWin }) {
       }
     } else if (dealerTotal === 21 && dealerHand.length >= 2 && gameState !== 'dealerTurn') {
       setWinPopup({ who: 'Dealer', message: `Blackjack! Total is ${dealerTotal}.` });
-    }
+    } console.log(gameState);
   }, [playerTotal, dealerTotal, gameState, playerHand.length, dealerHand.length]);
 
   React.useEffect(() => {
@@ -169,8 +171,8 @@ export function Table({ user, onPlayerWin }) {
           <div className="table-card-row-value">Player (Total: {playerTotal})</div>
           <div className="table-button-container">
             <button className="table-button" onClick={handleNewGame}>New Game</button>
-            <button className="table-button" onClick={handleHit} disabled={gameState === 'dealerTurn' || gameState === 'roundOver'}>Hit</button>
-            <button className="table-button" onClick={handleStand} disabled={gameState === 'dealerTurn' || gameState === 'roundOver' || playerHand.length === 0}>Stand</button>
+            <button className="table-button" onClick={handleHit} disabled={gameState === 'dealerTurn' || gameState === 'roundOver' || playerTotal > 21}>Hit</button>
+            <button className="table-button" onClick={handleStand} disabled={gameState === 'dealerTurn' || gameState === 'roundOver' || playerHand.length === 0 || playerTotal > 21}>Stand</button>
           </div>
         </section>
 
