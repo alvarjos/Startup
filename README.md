@@ -121,8 +121,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
+- [x] **Stores data in MongoDB** - I added the mongoDB database to the application and it store the total scores for the users. It also stores the total wins in the scores page by highest wins to lowest wins with each user being saved in the database with their scores.
+- [x] **Stores credentials in MongoDB** - I added the mongoDB database to my application and it stores the login username, password, token and hashes the password before storing it in the database.
 
 ## 🚀 WebSocket deliverable
 
