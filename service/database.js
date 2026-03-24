@@ -6,6 +6,7 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url);
 const db = client.db('startup');
 const scoreCollection = db.collection('scores');
+const userCollection = db.collection('users');
 
 async function connectDb() {
     await client.connect();
@@ -32,9 +33,34 @@ async function getHighScores() {
     return docs.map(({ username, wins }) => ({ username, wins }));
 }
 
+async function addUser(user) {
+    await userCollection.insertOne(user);
+}
+
+function getUser(username) {
+    return userCollection.findOne({ username });
+}
+
+function getUserByToken(token) {
+    return userCollection.findOne({ token });
+}
+
+async function setUserToken(username, token) {
+    await userCollection.updateOne({ username }, { $set: { token } });
+}
+
+async function clearUserToken(username) {
+    await userCollection.updateOne({ username }, { $unset: { token: '' } });
+}
+
 module.exports = {
     connectDb,
     scoreCollection,
     addScore,
     getHighScores,
+    addUser,
+    getUser,
+    getUserByToken,
+    setUserToken,
+    clearUserToken,
 };

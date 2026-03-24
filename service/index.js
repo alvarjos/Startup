@@ -3,11 +3,9 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
-const { connectDb, addScore, getHighScores } = require('./database.js');
+const { connectDb, addScore, getHighScores, addUser, getUser, getUserByToken, setUserToken, clearUserToken } = require('./database.js');
 
 const authCookieName = 'token';
-
-let users = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -41,8 +39,9 @@ apiRouter.post('/auth/login', async (req, res) => {
     const user = await findUser('username', req.body.username);
     if (user) {
       if (await bcrypt.compare(req.body.password, user.password)) {
-        user.token = uuid.v4();
-        setAuthCookie(res, user.token);
+        const newToken = uuid.v4();
+        await setUserToken(user.username, newToken);
+        setAuthCookie(res, newToken);
         res.send({ username: user.username });
         return;
       }
@@ -54,7 +53,7 @@ apiRouter.post('/auth/login', async (req, res) => {
 apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
-    delete user.token;
+    await clearUserToken(user.username);
   }
   res.clearCookie(authCookieName);
   res.status(204).end();
@@ -106,21 +105,24 @@ apiRouter.post('/score', verifyAuth, async (req, res) => {
 
   async function createUser(username, password) {
     const passwordHash = await bcrypt.hash(password, 10);
-
     const user = {
-      username: username,
+      username,
       password: passwordHash,
       token: uuid.v4(),
     };
-    users.push(user);
-
+    await addUser(user);
     return user;
   }
   
   async function findUser(field, value) {
     if (!value) return null;
-  
-    return users.find((u) => u[field] === value);
+    if (field === 'username') {
+      return await getUser(value);
+    }
+    if (field === 'token') {
+      return await getUserByToken(value);
+    }
+    return null;
   }
   
   // setAuthCookie in the HTTP response
