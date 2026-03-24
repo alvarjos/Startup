@@ -3,11 +3,11 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
+const { connectDb, addScore, getHighScores } = require('./database.js');
 
 const authCookieName = 'token';
 
 let users = [];
-let scores = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -71,9 +71,14 @@ const verifyAuth = async (req, res, next) => {
   };
 
 // GetScores
-apiRouter.get('/scores', verifyAuth, (_req, res) => {
-  const sorted = [...scores].sort((a, b) => (b.wins || 0) - (a.wins || 0));
-  res.send(sorted);
+apiRouter.get('/scores', verifyAuth, async (_req, res) => {
+  try {
+    const sorted = await getHighScores();
+    res.send(sorted);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Failed to load scores' });
+  }
 });
 
 // Test
@@ -83,20 +88,20 @@ apiRouter.get('/test', verifyAuth, (_req, res) => {
 });
 
 // SubmitScore
-apiRouter.post('/score', verifyAuth, (req, res) => {
+apiRouter.post('/score', verifyAuth, async (req, res) => {
   const username = (req.body && req.body.username) ? String(req.body.username).trim() : '';
   if (!username) {
     res.status(400).json({ msg: 'username required' });
     return;
   }
-  const entry = scores.find((s) => (s.username || '').toLowerCase() === username.toLowerCase());
-  if (entry) {
-    entry.wins = (entry.wins || 0) + 1;
-  } else {
-    scores.push({ username, wins: 1 });
+  try {
+    await addScore(username);
+    const sorted = await getHighScores();
+    res.send(sorted);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Failed to save score' });
   }
-  const sorted = [...scores].sort((a, b) => (b.wins || 0) - (a.wins || 0));
-  res.send(sorted);
 });
 
   async function createUser(username, password) {
@@ -128,7 +133,15 @@ apiRouter.post('/score', verifyAuth, (req, res) => {
     });
   }
   
-  app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-  });
+  async function start() {
+    await connectDb();
+    app.listen(port, () => {
+      console.log(`Listening on port ${port}`);
+    });
+  }
+
+  start().catch((err) => {
+    console.error("Failed to start server:", err);
+    process.exit(1);
+  })
   

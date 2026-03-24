@@ -1,2 +1,4 @@
 # Database credentials — do not commit
 dbConfig.json
+
+service/dbConfig.json
