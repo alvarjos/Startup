@@ -46,7 +46,7 @@ apiRouter.post('/auth/login', async (req, res) => {
         return;
       }
     }
-    res.status(401).send({ msg: 'Unauthorized' });
+    res.status(401).send({ msg: 'Invalid username or password' });
   });
 
 // DeleteAuth logout a user
@@ -90,7 +90,7 @@ apiRouter.get('/test', verifyAuth, (_req, res) => {
 apiRouter.post('/score', verifyAuth, async (req, res) => {
   const username = (req.body && req.body.username) ? String(req.body.username).trim() : '';
   if (!username) {
-    res.status(400).json({ msg: 'username required' });
+    res.status(400).json({ msg: 'Username required' });
     return;
   }
   try {
