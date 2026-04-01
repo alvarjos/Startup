@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 // Serve up websocket client HTML
-app.use(express.static('public'));
+app.use(express.static('index.html'));
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 server = app.listen(port, () => {
