@@ -2,6 +2,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
+const { WebSocketServer, WebSocket } = require('ws');
 const app = express();
 const { connectDb, addScore, getHighScores, addUser, getUser, getUserByToken, setUserToken, clearUserToken } = require('./database.js');
 
@@ -135,11 +136,68 @@ apiRouter.post('/score', verifyAuth, async (req, res) => {
     });
   }
   
+  function setupWebSocket(server) {
+    const wss = new WebSocketServer({ noServer: true });
+    let nextConnectionId = 1;
+    const connections = [];
+
+    server.on('upgrade', (request, socket, head) => {
+      let pathname;
+      try {
+        pathname = new URL(request.url, `http://${request.headers.host || 'localhost'}`).pathname;
+      } catch {
+        socket.destroy();
+        return;
+      }
+      if (pathname !== '/ws') {
+        socket.destroy();
+        return;
+      }
+      wss.handleUpgrade(request, socket, head, (ws) => {
+        wss.emit('connection', ws, request);
+      });
+    });
+
+    wss.on('connection', (ws) => {
+      const connection = { id: nextConnectionId++, alive: true, ws };
+      connections.push(connection);
+
+      ws.on('message', (data) => {
+        connections.forEach((c) => {
+          if (c.id !== connection.id && c.ws.readyState === WebSocket.OPEN) {
+            c.ws.send(data);
+          }
+        });
+      });
+
+      ws.on('close', () => {
+        const i = connections.findIndex((c) => c.id === connection.id);
+        if (i !== -1) connections.splice(i, 1);
+      });
+
+      ws.on('pong', () => {
+        connection.alive = true;
+      });
+    });
+
+    setInterval(() => {
+      connections.forEach((c) => {
+        if (!c.alive) {
+          c.ws.terminate();
+          return;
+        }
+        c.alive = false;
+        c.ws.ping();
+      });
+    }, 30000);
+  }
+
   async function start() {
     await connectDb();
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
       console.log(`Listening on port ${port}`);
     });
+    setupWebSocket(server);
   }
 
   start().catch((err) => {

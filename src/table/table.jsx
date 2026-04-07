@@ -11,6 +11,82 @@ export function Table({ user, onPlayerWin }) {
   const [gameState, setGameState] = React.useState('start'); // 'start' | 'playing' | 'dealerTurn' | 'roundOver'
   const recordedWinThisRound = React.useRef(false);
 
+  const [chatMessages, setChatMessages] = React.useState([]);
+  const [chatInput, setChatInput] = React.useState('');
+  const [wsConnected, setWsConnected] = React.useState(false);
+  const wsRef = React.useRef(null);
+  const textareaRef = React.useRef(null);
+  const cursorAfterNewline = React.useRef(null);
+
+  const pushChatMessage = React.useCallback((cls, from, text) => {
+    const id = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+    setChatMessages((prev) => [...prev, { id, cls, from, text }]);
+  }, []);
+
+  React.useEffect(() => {
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
+    wsRef.current = ws;
+
+    ws.onopen = () => {
+      setWsConnected(true);
+    };
+
+    ws.onmessage = async (event) => {
+      const raw = await event.data.text();
+      try {
+        const chat = JSON.parse(raw);
+        if (chat && typeof chat.name === 'string' && typeof chat.msg === 'string') {
+          pushChatMessage('user', chat.name, chat.msg);
+        }
+      } catch { 
+        /* Ignore any invalid messages*/
+      }
+    };
+
+    ws.onclose = () => {
+      setWsConnected(false);
+    };
+
+    return () => {
+      ws.close();
+      wsRef.current = null;
+    };
+  }, [pushChatMessage]);
+
+  React.useLayoutEffect(() => {
+    if (cursorAfterNewline.current == null || !textareaRef.current) return;
+    const pos = cursorAfterNewline.current;
+    cursorAfterNewline.current = null;
+    textareaRef.current.setSelectionRange(pos, pos);
+  }, [chatInput]);
+
+  function handleSendChat() {
+    const msg = chatInput.trim();
+    const ws = wsRef.current;
+    if (!msg || !ws || ws.readyState !== WebSocket.OPEN) return;
+    const name = user ?? '';
+    ws.send(JSON.stringify({ name, msg }));
+    pushChatMessage('me', 'me', msg);
+    setChatInput('');
+  }
+
+  function handleChatKeyDown(e) {
+    if (e.key !== 'Enter') return;
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const ta = textareaRef.current;
+      if (!ta) return;
+      const start = ta.selectionStart;
+      const end = ta.selectionEnd;
+      setChatInput((prev) => `${prev.slice(0, start)}\n${prev.slice(end)}`);
+      cursorAfterNewline.current = start + 1;
+      return;
+    }
+    e.preventDefault();
+    handleSendChat();
+  }
+
   function drawRandomCard(target) {
     setDeck((currentDeck) => {
       if (currentDeck.length === 0) {
@@ -61,7 +137,7 @@ export function Table({ user, onPlayerWin }) {
       }
     } else if (dealerTotal === 21 && dealerHand.length >= 2 && gameState !== 'dealerTurn') {
       setWinPopup({ who: 'Dealer', message: `Blackjack! Total is ${dealerTotal}.` });
-    } console.log(gameState);
+    }
   }, [playerTotal, dealerTotal, gameState, playerHand.length, dealerHand.length]);
 
   React.useEffect(() => {
@@ -177,19 +253,36 @@ export function Table({ user, onPlayerWin }) {
         </section>
 
         <section className="table-chat" aria-label="Table chat">
-          <fieldset id="chat-controls" className="table-chat-box table-chat-fieldset">
-            <textarea
-              id="new-msg"
-              className="table-chat-input table-chat-textarea"
-              placeholder="Message"
-              autoComplete="off"
-              rows={3}
-            />
+          <fieldset id="chat-controls" className="table-chat-box table-chat-fieldset" disabled={!wsConnected}>
+            Send a message here
+            <div className="table-chat-send-row">
+              <textarea
+                ref={textareaRef}
+                id="new-msg"
+                className="table-chat-input table-chat-textarea"
+                placeholder="Message"
+                maxLength={500}
+                autoComplete="off"
+                rows={3}
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                onKeyDown={handleChatKeyDown}
+              />
+              <button type="button" className="table-button table-chat-send-btn" onClick={handleSendChat}>
+                Send
+              </button>
+            </div>
           </fieldset>
-          <fieldset id="name-controls" className="table-chat-name-fieldset" aria-hidden="true">
-            <input type="hidden" id="my-name" value={user ?? ''} readOnly />
-          </fieldset>
-          <div id="chat-text" className="table-chat-box table-chat-messages"> Messages Here</div>
+          Chat Box
+          <div id="chat-text" className="table-chat-box table-chat-messages" role="log" aria-live="polite">
+            {chatMessages.map((m) => (
+              <div key={m.id} className="table-chat-line">
+                <span className={m.cls}>{m.from}</span>
+                <span className="table-chat-msg-sep">: </span>
+                <span className="table-chat-msg-text">{m.text}</span>
+              </div>
+            ))}
+          </div>
         </section>
     </main> 
   );
