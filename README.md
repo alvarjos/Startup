@@ -128,8 +128,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - The backend listens for the websocket connection from the frontend and sends those messages to the other connected clients.
+- [x] **Frontend makes WebSocket connection** - The frontend makes the websocket connection through the chatbox in the table page, and allows users to send other messages to current playing users. 
+- [x] **Data sent over WebSocket connection** - The data is sent from backend to the frontend and is displayed through the chatbox 
+- [x] **WebSocket data displayed** - The data is displayed through the chatbox with the username and message labeled.
+- [x] **Application is fully functional** - The app is fully functional with capabilites to play the game, keep track of scores, login and save user information, and send messages to other users that are currently playing. 
