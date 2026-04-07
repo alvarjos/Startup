@@ -373,3 +373,91 @@ footer {
     font-weight: bold;
     cursor: pointer;
 }
+
+/* Chat box in the table page */
+.table-chat {
+    position: relative;
+    margin: 1em 5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.table-chat-box {
+    border: 2px solid #fff;
+    border-radius: 4px;
+    margin: 0;
+}
+
+.table-chat-messages {
+    background-color: #30825c;
+    color: #fff;
+    min-height: 10em;
+    max-height: 15em;
+    overflow-y: auto;
+    padding: 0.5rem;
+    font-size: 1em;
+}
+
+/* Browsers give fieldsets uneven default padding (extra inline-start for a legend). Reset explicitly. */
+.table-chat-fieldset {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding-block: 0.5rem;
+    padding-inline: 0.5rem;
+    min-inline-size: 0;
+    background-color: #30825c;
+    border: 2px solid #fff;
+}
+
+.table-chat-fieldset:disabled {
+    opacity: 0.50;
+}
+
+.table-chat-input {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    border: none;
+    border-radius: 2px;
+    padding: 0.5em;
+    font-size: 24px;
+    background: #fff;
+    color: #000;
+}
+
+.table-chat-textarea {
+    display: block;
+    resize: none;
+    min-height: 5rem;
+    overflow-y: auto;
+}
+
+.table-chat-input:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.table-chat-name-fieldset {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+}
+
+.table-chat-messages .system {
+    color: #9ad9b4;
+}
+
+.table-chat-messages .user {
+    color: #fff;
+    font-weight: bold;
+}
+
+.table-chat-messages .me {
+    color: #7fd4a8;
+}

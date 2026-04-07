@@ -176,43 +176,21 @@ export function Table({ user, onPlayerWin }) {
           </div>
         </section>
 
-        
-    {/* Chat messages will appear here  
-        //   <section id="chatLog">
-        //     <div className="chat-header">Chat Log</div>
-
-        //     <div className="chat-messages">
-        //       <div className="chat-row">
-        //         <div className="chat-user">User 001</div>
-        //         <div className="chat-messages">Message will go right here</div>
-        //       </div>
-
-        //       <div className="chat-row">
-        //           <div className="chat-user">User 002</div>
-        //           <div className="chat-messages">Another message will go right here</div>
-        //       </div>
-
-        //       <div className="chat-row">
-        //         <div className="chat-user">User 003</div>
-        //         <div className="chat-messages">Another message will go right here</div>
-        //       </div>
-
-        //       <div className="chat-row">
-        //         <div className="chat-user">User 004</div>
-        //         <div className="chat-messages">Another message will go right here</div>
-        //       </div>
-
-        //       <div className="chat-row">
-        //         <div className="chat-user">User 005</div>
-        //         <div className="chat-messages">Another message will go right here</div>
-        //       </div>
-
-        //       <div className="chat-row">
-        //         <div className="chat-user">User 006</div>
-        //         <div className="chat-messages">Another message will go right here</div>
-        //       </div>
-        //     </div>    
-        //   </section> */} 
+        <section className="table-chat" aria-label="Table chat">
+          <fieldset id="chat-controls" className="table-chat-box table-chat-fieldset">
+            <textarea
+              id="new-msg"
+              className="table-chat-input table-chat-textarea"
+              placeholder="Message"
+              autoComplete="off"
+              rows={3}
+            />
+          </fieldset>
+          <fieldset id="name-controls" className="table-chat-name-fieldset" aria-hidden="true">
+            <input type="hidden" id="my-name" value={user ?? ''} readOnly />
+          </fieldset>
+          <div id="chat-text" className="table-chat-box table-chat-messages"> Messages Here</div>
+        </section>
     </main> 
   );
 }
